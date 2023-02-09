@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bord"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="Math Puzzle"
+        android:textSize="@dimen/_25sdp"
+        android:textStyle="bold|italic"
+        android:textColor="@color/purple_700"/>
+
+    <ImageView
+        android:id="@+id/bord"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_400sdp"
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="@dimen/_8sdp"
+        android:background="@drawable/blackboard_main_menu" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/continueBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:fontFamily="@font/chalk"
+            android:text="CONTINUE"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sdp"/>
+
+        <TextView
+            android:id="@+id/puzzlesBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:fontFamily="@font/chalk"
+            android:text="PUZZLES"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sdp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp"
+            android:fontFamily="@font/chalk"
+            android:text="BUY PRO"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sdp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/privacy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:background="@drawable/txtv_bg"
+        android:padding="@dimen/_8sdp"
+        android:text="Privacy Policy"
+        android:textSize="@dimen/_12sdp"
+        android:textColor="@color/black"/>
+
+    <ImageView
+        android:id="@+id/email"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:layout_above="@id/privacy"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/img_bg"
+        android:padding="@dimen/_4sdp"
+        android:src="@drawable/emailus"/>
+
+    <ImageView
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:layout_above="@id/privacy"
+        android:layout_toStartOf="@id/email"
+        android:background="@drawable/img_bg"
+        android:padding="@dimen/_4sdp"
+        android:src="@drawable/shareus"/>
+
+</RelativeLayout>
