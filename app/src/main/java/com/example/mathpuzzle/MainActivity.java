@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,12 +20,15 @@ public class MainActivity extends AppCompatActivity {
 
     TextView continueBtn, puzzlesBtn;
     public static List<Puzzles> PUZZLESLIST = new ArrayList<>();
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        int level = preferences.getInt("LastLevel", -1);
         continueBtn = findViewById(R.id.continueBtn);
         puzzlesBtn = findViewById(R.id.puzzlesBtn);
 
@@ -54,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, PuzzleActivity.class);
-                intent.putExtra("level", 0);
+                intent.putExtra("level", level + 1);
                 startActivity(intent);
             }
         });

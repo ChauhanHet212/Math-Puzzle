@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,20 +16,26 @@ import android.widget.Toast;
 
 public class PuzzleActivity extends AppCompatActivity implements View.OnClickListener {
 
-    int level;
+    int level = 0;
 
     TextView[] txtv = new TextView[10];
     ImageView puzzleBord, clearBtn, skipBtn;
     TextView puzzleNumber, ansTxtv, submitBtn;
     String n = "";
     long ans;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle);
 
-        level = getIntent().getIntExtra("level", 100);
+        if (getIntent().getExtras() != null) {
+            level = getIntent().getIntExtra("level", 100);
+        }
+        preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        editor = preferences.edit();
 
         puzzleBord = findViewById(R.id.puzzleBord);
         puzzleNumber = findViewById(R.id.puzzleNumber);
@@ -61,7 +68,11 @@ public class PuzzleActivity extends AppCompatActivity implements View.OnClickLis
             public void onClick(View view) {
                 if (!n.isEmpty()) {
                     ans = Long.parseLong(ansTxtv.getText().toString());
-                    if (ans == PUZZLESLIST.get(level).getAns()){
+                    if (ans == PUZZLESLIST.get(level).getAns()) {
+                        editor.putInt("LastLevel", level);
+                        editor.putString("levelStatus" + level, "win");
+                        editor.commit();
+
                         Intent intent = new Intent(PuzzleActivity.this, WinActivity.class);
                         intent.putExtra("win_level", level);
                         startActivity(intent);
@@ -80,11 +91,16 @@ public class PuzzleActivity extends AppCompatActivity implements View.OnClickLis
             public void onClick(View view) {
                 n = "";
                 ansTxtv.setText("");
-                if (level >= PUZZLESLIST.size() - 1){
+                editor.putString("levelStatus" + level, "skip");
+                if (level >= PUZZLESLIST.size() - 1) {
+                    editor.putInt("LastLevel", 0);
                     level = 0;
                 } else {
+                    editor.putInt("LastLevel", level);
                     level = level + 1;
                 }
+                editor.commit();
+
                 puzzleBord.setImageResource(PUZZLESLIST.get(level).getPuzzle());
                 puzzleNumber.setText("Puzzle " + (level + 1));
             }
@@ -94,7 +110,7 @@ public class PuzzleActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         for (int i = 0; i < 10; i++) {
-            if (view.getId() == txtv[i].getId()){
+            if (view.getId() == txtv[i].getId()) {
                 n = n + txtv[i].getText().toString();
                 ansTxtv.setText(n);
             }
