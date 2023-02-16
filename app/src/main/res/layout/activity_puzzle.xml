@@ -37,11 +37,28 @@
             android:background="@drawable/level_board"/>
 
         <ImageView
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_centerVertical="true"
+            android:id="@+id/life3"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/hint" />
+            android:layout_centerVertical="true"
+            android:src="@drawable/heart"/>
+
+        <ImageView
+            android:id="@+id/life2"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_toStartOf="@id/life3"
+            android:layout_centerVertical="true"
+            android:src="@drawable/heart"/>
+
+        <ImageView
+            android:id="@+id/life1"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_toStartOf="@id/life2"
+            android:layout_centerVertical="true"
+            android:src="@drawable/heart"/>
 
     </RelativeLayout>
 

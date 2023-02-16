@@ -16,8 +16,8 @@ import android.widget.TextView;
 public class WinActivity extends AppCompatActivity {
 
     TextView win_level, win_continue, win_main_menu;
-    ImageView sharePuzzle;
-    int level;
+    ImageView sharePuzzle, win_star1, win_star2, win_star3;
+    int level, star;
 
     int[] shareImg = {R.drawable.share1, R.drawable.share2, R.drawable.share3, R.drawable.share4, R.drawable.share5,
             R.drawable.share6, R.drawable.share7, R.drawable.share8, R.drawable.share9, R.drawable.share10,
@@ -33,10 +33,25 @@ public class WinActivity extends AppCompatActivity {
         win_continue = findViewById(R.id.win_continue);
         win_main_menu = findViewById(R.id.win_main_menu);
         sharePuzzle = findViewById(R.id.sharePuzzle);
+        win_star1 = findViewById(R.id.win_star1);
+        win_star2 = findViewById(R.id.win_star2);
+        win_star3 = findViewById(R.id.win_star3);
 
         level = getIntent().getIntExtra("win_level", 100);
+        star = getIntent().getIntExtra("star", 0);
 
         win_level.setText("PUZZLE " + (level + 1) + " COMPLETED");
+
+        if (star == 3){
+            win_star1.setVisibility(View.VISIBLE);
+            win_star2.setVisibility(View.VISIBLE);
+            win_star3.setVisibility(View.VISIBLE);
+        } else if (star == 2){
+            win_star1.setVisibility(View.GONE);
+        } else if (star == 1){
+            win_star1.setVisibility(View.GONE);
+            win_star2.setVisibility(View.GONE);
+        }
 
         win_continue.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -17,9 +17,10 @@ import android.widget.Toast;
 public class PuzzleActivity extends AppCompatActivity implements View.OnClickListener {
 
     int level = 0;
+    int chance = 3;
 
     TextView[] txtv = new TextView[10];
-    ImageView puzzleBord, clearBtn, skipBtn;
+    ImageView puzzleBord, clearBtn, skipBtn, life1, life2, life3;
     TextView puzzleNumber, ansTxtv, submitBtn;
     String n = "";
     long ans;
@@ -30,6 +31,19 @@ public class PuzzleActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(PuzzleActivity.this);
+        builder.setTitle("Info!!!");
+        builder.setMessage("You have 3 chance to give right answer.");
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
 
         if (getIntent().getExtras() != null) {
             level = getIntent().getIntExtra("level", 100);
@@ -43,6 +57,9 @@ public class PuzzleActivity extends AppCompatActivity implements View.OnClickLis
         clearBtn = findViewById(R.id.clearBtn);
         submitBtn = findViewById(R.id.submitBtn);
         skipBtn = findViewById(R.id.skipBtn);
+        life1 = findViewById(R.id.life1);
+        life2 = findViewById(R.id.life2);
+        life3 = findViewById(R.id.life3);
 
         for (int i = 0; i < 10; i++) {
             int id = getResources().getIdentifier("ans" + i, "id", getPackageName());
@@ -71,14 +88,47 @@ public class PuzzleActivity extends AppCompatActivity implements View.OnClickLis
                     if (ans == PUZZLESLIST.get(level).getAns()) {
                         editor.putInt("LastLevel", level);
                         editor.putString("levelStatus" + level, "win");
+                        editor.putInt("levelStar" + level, chance);
                         editor.commit();
 
                         Intent intent = new Intent(PuzzleActivity.this, WinActivity.class);
                         intent.putExtra("win_level", level);
+                        intent.putExtra("star", chance);
                         startActivity(intent);
                         finish();
                     } else {
                         Toast.makeText(PuzzleActivity.this, "Wrong!!!", Toast.LENGTH_SHORT).show();
+                        chance--;
+                        if (chance == 2){
+                            life1.setVisibility(View.INVISIBLE);
+                        } else if (chance == 1){
+                            life2.setVisibility(View.INVISIBLE);
+                        } else if (chance == 0){
+                            life3.setVisibility(View.INVISIBLE);
+                            AlertDialog.Builder builder1 = new AlertDialog.Builder(PuzzleActivity.this);
+                            builder1.setCancelable(false);
+                            builder1.setTitle("Filed!!!");
+                            builder1.setMessage("Level Filed, do you want to play again?");
+                            builder1.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                    Intent intent = new Intent(PuzzleActivity.this, PuzzleActivity.class);
+                                    intent.putExtra("level", level);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                            builder1.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                    finish();
+                                }
+                            });
+                            AlertDialog alertDialog1 = builder1.create();
+                            alertDialog1.show();
+                        }
                         ansTxtv.setText("");
                         n = "";
                     }

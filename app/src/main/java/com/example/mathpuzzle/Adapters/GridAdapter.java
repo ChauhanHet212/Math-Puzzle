@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mathpuzzle.Models.Puzzles;
@@ -26,7 +27,7 @@ public class GridAdapter extends BaseAdapter {
     SharedPreferences preferences;
 
     TextView levelBtn;
-    ImageView win;
+    ImageView win, star1, star2, star3;
 
     public GridAdapter(Activity activity, List<Puzzles> puzzlesList) {
         this.activity = activity;
@@ -55,19 +56,39 @@ public class GridAdapter extends BaseAdapter {
 
         levelBtn = view.findViewById(R.id.levelBtn);
         win = view.findViewById(R.id.win);
+        star1 = view.findViewById(R.id.star1);
+        star2 = view.findViewById(R.id.star2);
+        star3 = view.findViewById(R.id.star3);
 
         String status = preferences.getString("levelStatus" + i, "pending");
         int lastlevel = preferences.getInt("LastLevel", -1);
+        int star = preferences.getInt("levelStar" + i, -1);
 
         if (status.equals("skip") || i == lastlevel + 1) {
             win.setImageResource(0);
             levelBtn.setText(String.valueOf(i + 1));
             levelBtn.setVisibility(View.VISIBLE);
+            star1.setAlpha(0.4f);
+            star2.setAlpha(0.4f);
+            star3.setAlpha(0.4f);
         }
         if (status.equals("win")) {
             win.setImageResource(R.drawable.tick);
             levelBtn.setText(String.valueOf(i + 1));
             levelBtn.setVisibility(View.VISIBLE);
+            if (star == 1){
+                star1.setAlpha(1f);
+                star2.setVisibility(View.GONE);
+                star3.setVisibility(View.GONE);
+            } else if (star == 2){
+                star1.setAlpha(1f);
+                star2.setAlpha(1f);
+                star3.setVisibility(View.GONE);
+            } else if (star == 3){
+                star1.setAlpha(1f);
+                star2.setAlpha(1f);
+                star3.setAlpha(1f);
+            }
         }
         if (status.equals("win") || status.equals("skip") || i == lastlevel + 1) {
 
